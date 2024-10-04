@@ -71,6 +71,7 @@ API Response
 }
  */
 use serde::{Deserialize, Serialize};
+use tracing::info;
 
 // the root of the API response
 #[derive(Deserialize, Debug)]
@@ -162,6 +163,7 @@ impl AviationWeather {
 
         // API endpoint
         let url = "https://towpilot.ormalingen.tspycher.com/airfields/lszi";
+        info!("Fetching aviation weather data from {}", url);
 
         // Fetch and deserialize the data
         let response = client.get(url).send().await?.json::<ApiResponse>().await?;
