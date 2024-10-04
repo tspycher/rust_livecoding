@@ -1,0 +1,14 @@
+### GET request to example server
+GET {{host}}/aircrafts
+
+###
+
+### Create Aircraft
+POST {{host}}/aircrafts
+Content-Type: application/json
+
+{
+  "display_name": "Piper SuperCub",
+  "registration": "HB-PLQ"
+}
+###

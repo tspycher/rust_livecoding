@@ -19,13 +19,18 @@ use utoipa::{OpenApi};
         ),
         tags(
             (name = "Weather", description = "Get Aviation Weather"),
+            (name = "Aircraft", description = "Manage Aircrafts"),
         ),
         paths(
             endpoints::weather::weather_handler,
+            endpoints::aircraft::list_aircraft,
+            endpoints::aircraft::create_aircraft
         ),
         components(
             schemas(
                 weather::model::AviationWeather,
+                crate::models::aircraft::Aircraft,
+                crate::models::aircraft::NewAircraft,
             ),
         ),
         security(
