@@ -72,6 +72,7 @@ API Response
  */
 use serde::{Deserialize, Serialize};
 use tracing::info;
+use utoipa::ToSchema;
 
 // the root of the API response
 #[derive(Deserialize, Debug)]
@@ -86,9 +87,14 @@ struct Weather {
 }
 
 // the actual weather data
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(ToSchema, Serialize, Deserialize, Debug)]
 pub struct AviationWeather {
+    #[schema(example = 15.5)]
     oat: f32,
+
+    #[schema(example = "London Heathrow")]
+    airfield_name: Option<String>,
+
     valid: bool,
     timestamp: u64,
     age: i32,
@@ -113,7 +119,7 @@ impl fmt::Display for AviationWeather {
         // Format the aviation weather data into a nicely printed format
         write!(
             f,
-            "Aviation Weather Report:\n\
+            "Aviation Weather Report for {}:\n\n\
              ----------------------------\n\
              Outside Air Temperature (OAT): {:.1}°C\n\
              Valid: {}\n\
@@ -131,6 +137,7 @@ impl fmt::Display for AviationWeather {
              Density Altitude (DA): {:.2} ft\n\
              Timestamp: {}\n\
              Age: {} seconds",
+            self.airfield_name.as_ref().unwrap_or(&"Unknown".to_string()),
             self.oat,
             self.valid,
             self.alt,
@@ -168,8 +175,11 @@ impl AviationWeather {
         // Fetch and deserialize the data
         let response = client.get(url).send().await?.json::<ApiResponse>().await?;
 
+        let mut weather = response.weather.aviation;
+        weather.airfield_name = Some("Schupfart (LSZI)".to_string());
+
         // Return the aviation weather data
-        Ok(response.weather.aviation)
+        Ok(weather)
     }
 }
 

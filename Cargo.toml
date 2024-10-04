@@ -11,3 +11,5 @@ serde_json = "1.0.128"
 tokio = { version = "1.40.0", features = ["full"] }
 tracing = "0.1.40"
 tracing-subscriber = { version = "0.3.18", features = ["serde", "serde_json", "chrono", "env-filter"] }
+utoipa = { version = "4.2.3", features = ["axum_extras", "chrono"] }
+utoipa-redoc = { version = "4.0.0", features = ["axum"] }
