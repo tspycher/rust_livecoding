@@ -1,6 +1,6 @@
+use reqwest::Client;
 use std::fmt;
 use std::time::Duration;
-use reqwest::Client;
 // here goes our model
 /*
 API Response
@@ -119,7 +119,7 @@ impl fmt::Display for AviationWeather {
         // Format the aviation weather data into a nicely printed format
         write!(
             f,
-            "Aviation Weather Report for {}:\n\n\
+            "Aviation Weather Report for {}:\n\
              ----------------------------\n\
              Outside Air Temperature (OAT): {:.1}°C\n\
              Valid: {}\n\
@@ -137,7 +137,9 @@ impl fmt::Display for AviationWeather {
              Density Altitude (DA): {:.2} ft\n\
              Timestamp: {}\n\
              Age: {} seconds",
-            self.airfield_name.as_ref().unwrap_or(&"Unknown".to_string()),
+            self.airfield_name
+                .as_ref()
+                .unwrap_or(&"Unknown".to_string()),
             self.oat,
             self.valid,
             self.alt,
@@ -159,7 +161,6 @@ impl fmt::Display for AviationWeather {
         )
     }
 }
-
 
 impl AviationWeather {
     pub async fn fetch() -> Result<Self, reqwest::Error> {

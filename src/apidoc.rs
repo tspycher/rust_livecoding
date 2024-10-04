@@ -1,6 +1,6 @@
 use crate::endpoints;
 use crate::weather;
-use utoipa::{OpenApi};
+use utoipa::OpenApi;
 
 #[derive(OpenApi)]
 #[openapi(

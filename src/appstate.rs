@@ -1,6 +1,6 @@
-use std::sync::Arc;
 use diesel::r2d2::ConnectionManager;
 use diesel::SqliteConnection;
+use std::sync::Arc;
 use tokio::sync::Mutex;
 
 pub struct AppState {

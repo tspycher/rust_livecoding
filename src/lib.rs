@@ -1,6 +1,6 @@
-mod weather;
-pub mod endpoints;
 pub mod apidoc;
-pub mod schema;
 pub mod appstate;
+pub mod endpoints;
 pub mod models;
+pub mod schema;
+mod weather;

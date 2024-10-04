@@ -2,13 +2,13 @@ use axum::extract::State;
 use axum::response::IntoResponse;
 use diesel::prelude::*;
 
-use tokio::sync::Mutex;
-use crate::schema::aircraft::dsl::*;
-use std::sync::Arc;
-use axum::http::StatusCode;
-use axum::Json;
 use crate::appstate::AppState;
 use crate::models::aircraft::{Aircraft, NewAircraft};
+use crate::schema::aircraft::dsl::*;
+use axum::http::StatusCode;
+use axum::Json;
+use std::sync::Arc;
+use tokio::sync::Mutex;
 
 #[utoipa::path(
     get,
@@ -24,14 +24,16 @@ use crate::models::aircraft::{Aircraft, NewAircraft};
 pub async fn list_aircraft(
     State(state): State<Arc<Mutex<AppState>>>,
 ) -> Result<Json<Vec<Aircraft>>, impl IntoResponse> {
-
     let s = state.lock().await;
     let pool = s.pool.lock().await;
     let mut conn = pool.get().expect("Failed to get connection from pool.");
 
     match aircraft.load::<Aircraft>(&mut conn) {
         Ok(aircrafts) => Ok(Json(aircrafts)),
-        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, format!("Error listing aircrafts: {}", e)))
+        Err(e) => Err((
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Error listing aircrafts: {}", e),
+        )),
     }
 }
 
@@ -57,9 +59,12 @@ pub async fn create_aircraft(
     // Insert the new aircraft into the database
     match diesel::insert_into(aircraft)
         .values(&new_aircraft)
-        .execute(&mut conn) {
+        .execute(&mut conn)
+    {
         Ok(_) => Ok(StatusCode::CREATED),
-        Err(e) => Err((StatusCode::INTERNAL_SERVER_ERROR, format!("Error creating aircraft: {}", e)))
+        Err(e) => Err((
+            StatusCode::INTERNAL_SERVER_ERROR,
+            format!("Error creating aircraft: {}", e),
+        )),
     }
 }
-

@@ -3,7 +3,8 @@ use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
 #[derive(Queryable, Serialize, Selectable, ToSchema, Debug, Clone)]
-#[diesel(table_name = crate::schema::aircraft)]#[diesel(check_for_backend(diesel::sqlite::Sqlite))]
+#[diesel(table_name = crate::schema::aircraft)]
+#[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Aircraft {
     pub id: Option<i32>,
     pub display_name: String,
