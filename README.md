@@ -2,6 +2,7 @@
 
 Welcome to the Rust Live Coding Session repository! This project was created as part of an internal "TED Talk" to
 introduce our team to the Rust programming language through a live coding experience.
+
 The Video of the Coding Session is here: https://youtu.be/PDF20YdlHTw
 
 ## Overview
@@ -58,6 +59,8 @@ To run the code from this repository, you'll need to have Rust installed on your
    ```
    cd rust_livecoding
    cp .env_example .env
+   cargo install diesel_cli --no-default-features --features sqlite
+   diesel setup
    ```
 
 ## Running the Application
@@ -75,12 +78,22 @@ If the project includes tests, you can run them with:
 ```
 cargo test
 ```
+## Build for Production
+
+If the project includes tests, you can run them with:
+
+```
+cargo build --release
+./target/release/tedtalk
+```
 
 ## Project Structure
 
 - `src/` - Main source code directory
     - `main.rs` - The main entry point of the application
 - `Cargo.toml` - Project configuration file
+- `diesel.toml` - Diesel ORM configuration file
+- `http/` - Example HTTP Requests (Postman/Insomnia alternative)
 
 ## Learning Resources
 
@@ -92,14 +105,6 @@ cargo test
 
 This project is intended for educational purposes within our team. If you have suggestions or improvements, feel free to
 create a branch or discuss them during our next meeting.
-
-## License
-
-This project is licensed under the MIT License (see the LICENSE file for details).
-
-## Contact
-
-For any questions or discussions, please reach out to Your Name at your.email@example.com.
 
 ---
 
