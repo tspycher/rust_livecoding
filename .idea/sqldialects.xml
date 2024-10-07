@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/migrations/2024-10-04-100016_create_aircraft/down.sql" dialect="SQLite" />
     <file url="file://$PROJECT_DIR$/migrations/2024-10-04-100016_create_aircraft/up.sql" dialect="SQLite" />
   </component>
 </project>

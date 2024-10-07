@@ -36,7 +36,7 @@ async fn main() {
         .build(manager)
         .expect("Failed to create pool.");
     let appstate = AppState {
-        pool: Arc::new(Mutex::new(pool)),
+        pool: Arc::new(pool),
     };
 
     // Build the Axum router

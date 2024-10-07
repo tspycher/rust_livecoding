@@ -25,8 +25,7 @@ pub async fn list_aircraft(
     State(state): State<Arc<Mutex<AppState>>>,
 ) -> Result<Json<Vec<Aircraft>>, impl IntoResponse> {
     let s = state.lock().await;
-    let pool = s.pool.lock().await;
-    let mut conn = pool.get().expect("Failed to get connection from pool.");
+    let mut conn = s.pool.get().expect("Failed to get connection from pool.");
 
     match aircraft.load::<Aircraft>(&mut conn) {
         Ok(aircrafts) => Ok(Json(aircrafts)),
@@ -53,8 +52,7 @@ pub async fn create_aircraft(
     Json(new_aircraft): Json<NewAircraft>,
 ) -> Result<impl IntoResponse, impl IntoResponse> {
     let s = state.lock().await;
-    let pool = s.pool.lock().await;
-    let mut conn = pool.get().expect("Failed to get connection from pool.");
+    let mut conn = s.pool.get().expect("Failed to get connection from pool.");
 
     // Insert the new aircraft into the database
     match diesel::insert_into(aircraft)
