@@ -8,7 +8,6 @@ use crate::schema::aircraft::dsl::*;
 use axum::http::StatusCode;
 use axum::Json;
 use std::sync::Arc;
-use tokio::sync::Mutex;
 
 #[utoipa::path(
     get,
@@ -22,10 +21,9 @@ use tokio::sync::Mutex;
     )
 )]
 pub async fn list_aircraft(
-    State(state): State<Arc<Mutex<AppState>>>,
+    State(state): State<Arc<AppState>>,
 ) -> Result<Json<Vec<Aircraft>>, impl IntoResponse> {
-    let s = state.lock().await;
-    let mut conn = s.pool.get().expect("Failed to get connection from pool.");
+    let mut conn = state.pool.get().expect("Failed to get connection from pool.");
 
     match aircraft.load::<Aircraft>(&mut conn) {
         Ok(aircrafts) => Ok(Json(aircrafts)),
@@ -48,11 +46,10 @@ pub async fn list_aircraft(
     )
 )]
 pub async fn create_aircraft(
-    State(state): State<Arc<Mutex<AppState>>>,
+    State(state): State<Arc<AppState>>,
     Json(new_aircraft): Json<NewAircraft>,
 ) -> Result<impl IntoResponse, impl IntoResponse> {
-    let s = state.lock().await;
-    let mut conn = s.pool.get().expect("Failed to get connection from pool.");
+    let mut conn = state.pool.get().expect("Failed to get connection from pool.");
 
     // Insert the new aircraft into the database
     match diesel::insert_into(aircraft)

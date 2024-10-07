@@ -7,7 +7,6 @@ use std::sync::Arc;
 use tedtalk::apidoc::ApiDoc;
 use tedtalk::appstate::AppState;
 use tedtalk::endpoints;
-use tokio::sync::Mutex;
 use tracing::{info, Level};
 use tracing_subscriber::FmtSubscriber;
 use utoipa::OpenApi;
@@ -48,7 +47,7 @@ async fn main() {
             get(endpoints::aircraft::list_aircraft).post(endpoints::aircraft::create_aircraft),
         )
         .merge(Redoc::with_url("/docs", ApiDoc::openapi()))
-        .with_state(Arc::new(Mutex::new(appstate)));
+        .with_state(Arc::new(appstate));
 
     // Run the application on localhost:3000
     let host = "127.0.0.1";

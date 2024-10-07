@@ -8,7 +8,7 @@ POST {{host}}/aircrafts
 Content-Type: application/json
 
 {
-  "display_name": "Husky A-1B",
-  "registration": "HB-KMY"
+  "display_name": "Husky A-1A",
+  "registration": "HB-KIP"
 }
 ###
